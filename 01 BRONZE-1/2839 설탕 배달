@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(){
+    int N,n;
+    int a;
+    scanf("%d ",&N);
+    a=N/5;
+    while(1){
+        n=N-5*a;
+        if(a==0 && n%3!=0){
+            printf("-1");
+            break;
+        }
+        if(n%3==0){
+            a=a+n/3;
+            printf("%d",a);
+            break;
+        }
+        else a--;
+    }
+}
