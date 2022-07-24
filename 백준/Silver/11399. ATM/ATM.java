@@ -1,18 +1,17 @@
 import java.util.Arrays;
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Scanner sc= new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
 		int N,answer=0; // N 사람수, answer 답
 		String str; // 시간pi를 받을 배열
-		N=sc.nextInt();
-		sc.nextLine();
-		str=sc.nextLine();
-		
+		N=Integer.parseInt(br.readLine());
+		str=br.readLine();
+
 		String[] array=str.split(" "); // 공백단위로 잘라서 배열에 저장
-		
+
 		int[] array2=new int[N]; // 정수형 배열선언
 		int wait=0;
 		
@@ -28,6 +27,5 @@ public class Main {
 		}
 		
 		System.out.println(answer);
-
 	}
 }
