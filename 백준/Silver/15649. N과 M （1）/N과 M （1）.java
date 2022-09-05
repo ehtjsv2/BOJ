@@ -26,22 +26,17 @@ public class Main {
                 System.out.print(array[i]+" ");
             }
             System.out.println();
-            visited[array[index-1]]=0; // M-1로 돌아가기전에 현재 방문해있는곳 방문x로 초기화
             return;
         }
         /* 1~N까지 하나씩 array에 집어넣기. 단, 방문했으면 하지않는다. */
         for(int i=1;i<=N;i++){
-          //  System.out.println("반복시작 : "+i);
-            if(i==2){
-            //    System.out.println("현재 2 = "+visited[i]);
-            }
             if(visited[i]==0){
                 visited[i]=1;
                 array[index]=i;
                 recur(index+1);
+                visited[i]=0;
             }
         }
-        if(index>0)visited[array[index-1]]=0;
         return ;
     }
 }
