@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+    static StringBuilder sb = new StringBuilder();
     static int N;
     static int M;
     static int[] visited;
@@ -16,16 +17,17 @@ public class Main {
         visited=new int[N+1];
         array=new int[N];
         recur(0);
+        System.out.println(sb);
     }
     /* 백트래킹 */
     static void recur(int index){
         /* M개를 다골랐을경우 */
         if(index>M-1){
             /* 출력 */
-            for(int i=0;i<M;i++){
-                System.out.print(array[i]+" ");
-            }
-            System.out.println();
+            for(int i=0;i<M;i++) {
+				sb.append(array[i]).append(" ");
+			}
+			sb.append("\n");
             return;
         }
         /* 1~N까지 하나씩 array에 집어넣기. 단, 방문했으면 하지않는다. */
