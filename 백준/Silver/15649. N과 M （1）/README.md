@@ -1,5 +1,9 @@
 # [Silver III] N과 M (1) - 15649 
 
+## 배운점
+> * system.out.println() 은 생각보다 시간을 많이 잡아먹는다. 그래서 최대한 호출을 줄이는게 좋다.
+> * 이 문제에서 줄이는 방법으로는 숫자들을 하나의 문자열로 다 append한 다음에 print문을 한번만 사용하는 것이다.
+
 [문제 링크](https://www.acmicpc.net/problem/15649) 
 
 ### 성능 요약
