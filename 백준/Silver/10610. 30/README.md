@@ -8,7 +8,7 @@
 
 ### 분류
 
-그리디 알고리즘(greedy), 수학(math), 정수론(number_theory), 정렬(sorting), 문자열(string)
+수학, 문자열, 그리디 알고리즘, 정렬, 정수론
 
 ### 문제 설명
 
