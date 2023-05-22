@@ -1,31 +1,31 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.io.*;
+import java.util.StringTokenizer;
 
 public class Main {
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        
+        int N = Integer.parseInt(br.readLine());
+        int time[]=new int[N];
+        int result=0;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
-		int N,answer=0; // N 사람수, answer 답
-		String str; // 시간pi를 받을 배열
-		N=Integer.parseInt(br.readLine());
-		str=br.readLine();
-
-		String[] array=str.split(" "); // 공백단위로 잘라서 배열에 저장
-
-		int[] array2=new int[N]; // 정수형 배열선언
-		int wait=0;
-		
-		for(int i=0;i<N;i++) {
-			array2[i]=Integer.parseInt(array[i]); //문자 배열을 정수배열로 이동
-		}
-		
-		Arrays.sort(array2); // 오름차순으로 정렬
-		
-		for(int i=0;i<N;i++) {
-			answer=answer+wait+array2[i]; //총+ 본인이 기다린시간+ 본인 인출시간
-			wait=wait+array2[i]; // 다음 사람이 기다릴 시간 동기화
-		}
-		
-		System.out.println(answer);
-	}
+        st= new StringTokenizer(br.readLine());
+        for(int i=0;i<N;i++){
+            time[i]=Integer.parseInt(st.nextToken());
+        }
+        //정렬
+        Arrays.sort(time);
+        
+        int add=0;
+        //add=pre_add+time[i]
+        for(int i=0;i<N;i++){
+            add = add+time[i];
+            result +=add;
+        }
+        System.out.println(result);
+    }
 }
