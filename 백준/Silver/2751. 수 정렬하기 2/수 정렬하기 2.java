@@ -11,8 +11,8 @@ public class Main {
         }
         Arrays.sort(arr);
         StringBuilder sb = new StringBuilder();
-        for(int i=0;i<N;i++){
-            sb.append(arr[i]+"\n");
+        for(int num : arr){
+            sb.append(num+"\n");
         }
         System.out.println(sb.toString());
         
