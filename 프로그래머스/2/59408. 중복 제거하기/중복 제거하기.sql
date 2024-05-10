@@ -1,0 +1,7 @@
+# -- 코드를 입력하세요
+# SELECT COUNT(*)
+# FROM (
+   
+# ) AS A;
+ SELECT COUNT(DISTINCT(NAME))
+    FROM ANIMAL_INS
