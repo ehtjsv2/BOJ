@@ -1,29 +1,33 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
+    static Integer[] node;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-        boolean[][] graph = new boolean[N + 1][N + 1];
-        boolean[] know = new boolean[N + 1];
+        node = new Integer[N + 1];
+        boolean[] know = new boolean[N+1];
         String[] parties = new String[M];
 
         st = new StringTokenizer(br.readLine());
         int knowIndex = Integer.parseInt(st.nextToken());
+        // 진실 아는 사람
         for (int i = 0; i < knowIndex; i++) {
             know[Integer.parseInt(st.nextToken())] = true;
         }
 
+        // 각 노드 부모 본인으로 초기화
         for (int i = 1; i < N + 1; i++) {
-            graph[i][i] = true;
+            node[i] = i;
         }
 
+        // 파티 순회하며 부모 업데이트
         for (int i = 0; i < M; i++) {
             String party = br.readLine();
             parties[i] = party;
@@ -33,62 +37,54 @@ public class Main {
             if (c >= 2) {
                 before = Integer.parseInt(st.nextToken());
             }
+            // n번 째 파티
             for (int j = 0; j < c - 1; j++) {
                 int next = Integer.parseInt(st.nextToken());
-                graph[before][next] = true;
-                graph[next][before] = true;
+                union(before,next);
                 before = next;
             }
         }
-//        for (int i = 1; i < N + 1; i++) {
-//            for (int j = 1; j < N + 1; j++) {
-//                System.out.print(graph[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+
+
+        for (int i = 1; i <= N; i++) {
+            if(know[i]){
+                know[findParent(i)] = true;
+            }
+        }
 
         int answer = 0;
-        for (int i = 0; i < parties.length; i++) {
-//            System.out.println(i + "번째 파티");
-            int cnt = Integer.parseInt(parties[i].substring(0, 2).trim());
-//            System.out.println(cnt);
-            String party = parties[i].substring(2);
-//            System.out.println(party);
-            st = new StringTokenizer(party);
-            boolean isFindAnswer = false;
-            for (int j = 0; j < cnt; j++) {
-                if (isFindAnswer == true) {
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(parties[i]);
+            int c = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < c; j++) {
+                int num = Integer.parseInt(st.nextToken());
+                if (know[findParent(num)]){
+                    answer++;
                     break;
-                }
-                Stack<Integer> stack = new Stack<>();
-                boolean[] visited = new boolean[N + 1];
-                int visit = Integer.parseInt(st.nextToken());
-                stack.push(visit);
-                visited[visit] = true;
-                if (know[visit] == true) {
-//                    System.out.println("진실아는 자 발견 = " + visit);
-                    answer--;
-                    isFindAnswer = true;
-                }
-                while (!stack.isEmpty() && isFindAnswer == false) {
-                    int now = stack.pop();
-                    for (int k = 1; k < N + 1; k++) {
-                        if (graph[now][k] == true && visited[k] == false) {
-//                            System.out.println("확인할 = " + visit + ", 연결된 = " + k);
-                            if (know[k] == true) {
-//                                System.out.println("진실아는 자 발견 = " + k);
-                                answer--;
-                                isFindAnswer = true;
-                                break;
-                            }
-                            stack.push(k);
-                            visited[k] = true;
-                        }
-                    }
                 }
             }
         }
 
-        System.out.println(parties.length + answer);
+        System.out.println(M-answer);
+
+    }
+
+    static int findParent(int num) {
+        if (node[num] == num) {
+            return num;
+        }
+        return findParent(node[num]);
+    }
+
+    static void union(int x, int y){
+        int xParent = findParent(x);
+        int yParent = findParent(y);
+
+        if(xParent<yParent){
+            node[yParent] = xParent;
+        }
+        else if(yParent<xParent){
+            node[xParent] = yParent;
+        }
     }
 }
