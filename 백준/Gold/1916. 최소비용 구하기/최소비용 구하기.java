@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -37,49 +35,44 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
-        
         int[] startCost = new int[N + 1];
-        Arrays.fill(startCost, MAX_VALUE);
-        startCost[start] = 0;
+        for (int i = 1; i <= N; i++) {
+            startCost[i] = cost[start][i];
+        }
 
-        PriorityQueue<Node> q = new PriorityQueue<Node>();
         boolean[] visited = new boolean[N + 1];
-        q.offer(new Node(start, 0));
-
-        while (!q.isEmpty()) {
+        visited[start] = true;
+        for (int i = 1; i <= N; i++) {
             // 다음 방문할 노드는 제일 비용적은 인덱스
-            Node now = q.poll();
-            int visitIndex = now.no;
-            if (visited[visitIndex]) {
-                continue;
-            }
-            visited[visitIndex] = true;
+            int visit = findMinCostIndex(startCost, visited);
+            visited[visit] = true;
 
-            for (int i = 1; i <= N; i++) {
-                // 현재 방문점에서 다음 노드 방문하는 것이 이전 비용보다 작다면
-                if (cost[visitIndex][i] != MAX_VALUE && !visited[i] &&
-                        startCost[visitIndex] + cost[visitIndex][i] < startCost[i]) {
-                    startCost[i] = startCost[visitIndex] + cost[visitIndex][i];
-                    q.offer(new Node(i, startCost[i]));
+            for (int j = 1; j <= N; j++) {
+                if(visited[j] == false){
+                    // 현재 방문점에서 다음 노드 방문하는 것이 이전 비용보다 작다면
+                    if (startCost[visit] + cost[visit][j] >= 0 && startCost[visit] + cost[visit][j] < startCost[j]) {
+                        startCost[j] = startCost[visit] + cost[visit][j];
+                    }
                 }
             }
+
         }
 
         System.out.println(startCost[end]);
     }
 
-    static class Node implements Comparable<Node> {
-        int no;
-        int cost;
+    private static int findMinCostIndex(int[] startCost, boolean[] visited) {
+        int min = MAX_VALUE;
+        int minIndex = 0;
+        for (int i = 1; i <= N; i++) {
+            if (visited[i] == false) {
+                if (startCost[i] < min) {
+                    min = startCost[i];
+                    minIndex = i;
+                }
+            }
 
-        public Node(int index, int cost) {
-            this.no = index;
-            this.cost = cost;
         }
-
-        @Override
-        public int compareTo(Node o) {
-            return this.cost - o.cost;
-        }
+        return minIndex;
     }
 }
