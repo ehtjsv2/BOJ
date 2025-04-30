@@ -38,10 +38,13 @@ public class Main {
     }
 
     public static int findParent(int a, int[] arr) {
-        while (arr[a] != a) {
-            a = arr[a];
+        if(arr[a] == a){
+            return a;
         }
-        return a;
+        else{
+            arr[a] = findParent(arr[a], arr);
+            return arr[a];
+        }
     }
 
 }
