@@ -28,23 +28,25 @@ public class Main {
 
         HashSet<Character> set = new HashSet<>();
         set.add(arr[0][0]);
-        dfs(0,0,set,1);
+        boolean[] visitedAlpha = new boolean[30];
+        visitedAlpha[arr[0][0]-'A'] = true;
+        dfs(0,0,visitedAlpha,1);
         System.out.println(answer);
     }
 
-    public static void dfs(int i, int j, HashSet<Character> set, int depth) {
+    public static void dfs(int i, int j, boolean[] visitedAlpha, int depth) {
         if (answer < depth) {
             answer = depth;
         }
         for (int k = 0; k < 4; k++) {
             int nextI = i+di[k];
             int nextJ = j+dj[k];
-            if (nextI >= N || nextJ >= M || nextJ < 0 || nextI < 0 || set.contains(arr[nextI][nextJ])) {
+            if (nextI >= N || nextJ >= M || nextJ < 0 || nextI < 0 || visitedAlpha[arr[nextI][nextJ]-'A']) {
                 continue;
             }
-            set.add(arr[nextI][nextJ]);
-            dfs(nextI, nextJ, set, depth + 1);
-            set.remove(arr[nextI][nextJ]);
+            visitedAlpha[arr[nextI][nextJ] - 'A'] = true;
+            dfs(nextI, nextJ, visitedAlpha, depth + 1);
+            visitedAlpha[arr[nextI][nextJ] - 'A'] = false;
         }
     }
 }
