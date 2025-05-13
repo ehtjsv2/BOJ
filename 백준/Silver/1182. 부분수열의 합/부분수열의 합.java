@@ -21,9 +21,7 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i = 0; i < N; i++) {
-            bt(i, 0);
-        }
+        bt(-1,0);
 
         System.out.println(answer);
     }
@@ -32,14 +30,13 @@ public class Main {
         if (index >= N) {
             return;
         }
-
-        sum += arr[index];
-        if (sum == S) {
+        if(sum==S && index!=-1){
             answer++;
         }
-
         for (int i = index + 1; i < N; i++) {
+            sum += arr[i];
             bt(i, sum);
+            sum -= arr[i];
         }
     }
 }
