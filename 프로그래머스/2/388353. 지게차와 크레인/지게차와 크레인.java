@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
     
     static int n;
@@ -15,7 +17,7 @@ class Solution {
         stg = new char[n][m];
         removed = new boolean[n][m];
         removeTime = new int[n][m];
-        
+        boolean[][] visited = new boolean[n][m];    
         for(int i=0;i<n;i++){
             for(int j = 0;j<m;j++){
                 stg[i][j] = storage[i].charAt(j);
@@ -29,7 +31,9 @@ class Solution {
             for(int i=0;i<n;i++){
                 for(int j = 0;j<m;j++){
                     if(stg[i][j] == request.charAt(0)){
-                        boolean[][] visited = new boolean[n][m];
+                        for(int k = 0;k<n;k++){
+                            Arrays.fill(visited[k], false);
+                        }
                         visited[i][j] = true;
                         if(request.length() == 1){
                             if(removed[i][j] == false && canRemove(i,j,visited)){
