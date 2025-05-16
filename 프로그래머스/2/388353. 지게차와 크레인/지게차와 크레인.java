@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Solution {
     
     static int n;
@@ -26,38 +24,18 @@ class Solution {
         int answer = 0;
         int removeCount = 0;
         
+        
         for(String request : requests){
             for(int i=0;i<n;i++){
                 for(int j = 0;j<m;j++){
                     if(stg[i][j] == request.charAt(0)){
                         boolean[][] visited = new boolean[n][m];
+                        visited[i][j] = true;
                         if(request.length() == 1){
-                            if(removed[i][j] == false){
-                                Deque<Integer> dqI = new ArrayDeque<>();
-                                Deque<Integer> dqJ = new ArrayDeque<>();
-                                dqI.addLast(i);
-                                dqJ.addLast(j);
-                                boolean flag = false;
-                                while(!dqI.isEmpty() && flag == false){
-                                    int nowI = dqI.removeLast();
-                                    int nowJ = dqJ.removeLast();
-                                    visited[nowI][nowJ] = true;
-                                    for(int k =0;k<4;k++){
-                                        int nextI = nowI+di[k];
-                                        int nextJ = nowJ+dj[k];
-                                        if(nextI<0 || nextI>=n || nextJ<0 || nextJ>=m){
-                                            removed[i][j] = true;
-                                            removeTime[i][j] = time;
-                                            removeCount++;
-                                            flag = true;
-                                            break;
-                                        }
-                                        if(removed[nextI][nextJ] == true && removeTime[nextI][nextJ] != time && visited[nextI][nextJ] == false){
-                                            dqI.addLast(nextI);
-                                            dqJ.addLast(nextJ);
-                                        }
-                                    }
-                                }
+                            if(removed[i][j] == false && canRemove(i,j,visited)){
+                                removed[i][j] = true;
+                                removeTime[i][j] = time;
+                                removeCount++;
                             }    
                         }
                         else{
@@ -68,7 +46,6 @@ class Solution {
                             }
                             
                         }
-                        visited[i][j] = false;
                     }
                 }
             }
@@ -85,18 +62,15 @@ class Solution {
             int nextI = i+di[k];
             int nextJ = j+dj[k];
             if(nextI<0 || nextI>=n || nextJ<0 || nextJ>=m){
-                visited[i][j] = false;
                 return true;
             }
             if(removed[nextI][nextJ] == true && removeTime[nextI][nextJ] != time && visited[nextI][nextJ] == false){
                 boolean can = canRemove(nextI,nextJ, visited);
                 if(can == true){
-                    visited[i][j] = false;
                     return true;
                 }
             }
         }
-        visited[i][j] = false;
         return false;
     }
 
